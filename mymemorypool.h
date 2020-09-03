@@ -29,8 +29,8 @@ class MyMemoryPool {
  public:
   MyMemoryPool();
   ~MyMemoryPool();
-  void* malloc();
-  void free(void*);
+  void* apply();
+  void release(void*);
   void print();
 };
 
@@ -69,7 +69,7 @@ MyMemoryPool<ObjectSize, ObjectNumber>::~MyMemoryPool() {
 //Allocates ObjectSize bytes of uninitialized storage from shared memory
 //Returns NULL if no memory is available else a pointer to the allocated memory
 template<int ObjectSize, int ObjectNumber>
-void* MyMemoryPool<ObjectSize, ObjectNumber>::malloc() {
+void* MyMemoryPool<ObjectSize, ObjectNumber>::apply() {
   if (shared->first == 0) {
     return NULL;
   }
@@ -82,10 +82,10 @@ void* MyMemoryPool<ObjectSize, ObjectNumber>::malloc() {
   return ans;
 }
 
-//Deallocates the space previously allocated by malloc
+//Deallocates the space previously allocated by apply
 //If ptr is a null pointer, the function does nothing.
 template<int ObjectSize, int ObjectNumber>
-void MyMemoryPool<ObjectSize, ObjectNumber>::free(void* ptr) {
+void MyMemoryPool<ObjectSize, ObjectNumber>::release(void* ptr) {
   if (ptr == NULL) return;
   int delta = (uint8_t*)ptr - (uint8_t*)shmaddr;
   if (shared->first == 0)

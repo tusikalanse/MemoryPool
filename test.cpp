@@ -21,7 +21,7 @@ int main() {
   cout << "Hello, world!" << endl;
   for (int i = 0; i < 30; ++i) {
     pool.print();
-    foo* pos = (foo*)pool.malloc();
+    foo* pos = (foo*)pool.apply();
     if (pos == NULL) {
       cout << "No memory" << endl;
     }
@@ -35,13 +35,13 @@ int main() {
     cout << v[i]->x << " " << v[i]->y << " " << v[i]->s << endl;
   }
   for (int i = 0; i < 10; ++i) {
-    pool.free(v.back());
+    pool.release(v.back());
     v.pop_back();
   }
   pool.print();
     for (int i = 0; i < 20; ++i) {
     pool.print();
-    foo* pos = (foo*)pool.malloc();
+    foo* pos = (foo*)pool.apply();
     if (pos == NULL) {
       cout << "No memory" << endl;
     }
