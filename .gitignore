@@ -3,3 +3,6 @@
 !*/
 # executable file
 *.out
+
+# vscode file
+.vscode/*
