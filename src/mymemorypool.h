@@ -82,6 +82,9 @@ int MyMemoryPool<ObjectSize>::init(int IPCKEY, int ObjectNumber) {
     first = static_cast<int*>(shmaddr);
     used = reinterpret_cast<uint8_t*>(first) + sizeof(int);
     data = reinterpret_cast<node*>(used + 4 * (1 + (ObjectNumber - 1) / 32));
+    count = 0;
+    for (int i = 0; i < total; ++i)
+      count += getstatus(i);
   } 
   return 0;
 }
